@@ -1,0 +1,77 @@
+<div class="row">
+    <div class="col s12">
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">search</i>
+                <textarea id="filter" onkeyup="getFilter()" class="materialize-textarea"></textarea>
+                <label for="filter">Procurar...</label>
+            </div>
+        </div>
+    </div>
+    <div class="col s12">
+        <table id="table" class="highlight cell-border stripe display responsive nowrap" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Cliente</th>
+                    <th>Forma de pagamento</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each payments}}
+                <tr>
+                    <td>{{formatDate date=createdAt format="DD/MM/YYYY HH:mm:SS"}}</td>
+                    <td>{{Cliente.Nome}} {{Cliente.Sobrenome}}</td>
+                    <td>{{Forma_pagamento}}</td>
+                    <td>R$ {{Valor}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large color-blue tooltipped" data-position="left" data-tooltip="Adicionar"
+        href="/payments/create">
+        <i class="large material-icons">add</i>
+    </a>
+</div>
+
+<script src="scripts/table.js"></script>
+<script>
+    $(document).ready(function () {
+        var table = $('#table').DataTable({
+            language: {
+                "sEmptyTable": "Nenhum registro encontrado",
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sInfoThousands": ".",
+                "sLengthMenu": "_MENU_ resultados por página",
+                "sLoadingRecords": "Carregando...",
+                "sProcessing": "Processando...",
+                "sZeroRecords": "Nenhum registro encontrado",
+                "sSearch": "Pesquisar",
+                "oPaginate": {
+                    "sNext": "Próximo",
+                    "sPrevious": "Anterior",
+                    "sFirst": "Primeiro",
+                    "sLast": "Último"
+                },
+                "oAria": {
+                    "sSortAscending": ": Ordenar colunas de forma ascendente",
+                    "sSortDescending": ": Ordenar colunas de forma descendente"
+                }
+            },
+            dom: 'tip'
+        });
+
+        $('#filter').on('keyup', function () {
+            table.search(this.value).draw();
+        });
+    });
+
+</script>

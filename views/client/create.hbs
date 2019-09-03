@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col s12">
+        <input id="id" value="{{client._id}}" hidden />
+        <div class="input-field col s12 m6">
+            <input id="nome" type="text" class="validate" value="{{client.Nome}}">
+            <label for="nome">Nome</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input id="sobrenome" type="text" class="validate" value="{{client.Sobrenome}}">
+            <label for="sobrenome">Sobrenome</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input id="CPF" type="text" class="validate" value="{{client.CPF}}">
+            <label for="CPF">CPF</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input id="celular" type="text" class="validate" value="{{client.Celular}}">
+            <label for="celular">Celular</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input id="email" type="text" class="validate" value="{{client.Email}}">
+            <label for="email">E-mail</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input id="saldo" type="text" class="validate" value="{{client.Saldo}}">
+            <label for="saldo">Saldo</label>
+        </div>
+        <div class="col s12 m4 offset-m8">
+            <a style="width: 100%" class="waves-effect waves-light btn color-blue" onclick="saveClient()"><i
+                    class="material-icons right">send</i>Salvar</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#CPF').mask('000.000.000-00', { reverse: true });
+        $('#saldo').mask("Z0999999,00", {
+            translation: {
+                '0': { pattern: /\d/ },
+                '9': { pattern: /\d/, optional: true },
+                'Z': { pattern: /[\-\+]/, optional: true }
+            }
+        });
+
+        var SPMaskBehavior = function (val) {
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+        };
+
+        $('#celular').mask(SPMaskBehavior, {
+            onKeyPress: function (val, e, field, options) {
+                field.mask(SPMaskBehavior.apply({}, arguments), options);
+            }
+        });
+    });
+
+    function saveClient() {
+        var Nome = $("#nome").val();
+        var Sobrenome = $("#sobrenome").val();
+        var CPF = $("#CPF").val().replace(/\D/g, '');;
+        var Celular = $("#celular").val().replace(/\D/g, '');;
+        var Email = $("#email").val();
+        var Saldo = $("#saldo").val().replace(/\./g, '').replace(/\,/g, '.');
+        var Id = $("#id").val();
+
+        $.post("/clients/saveClient", { Nome, Sobrenome, CPF, Celular, Email, Saldo, Id }, function (data) {
+            localStorage.setItem("message", "Cliente salvo com sucesso!");
+            window.location = "/clients";
+        }).fail(function () {
+            M.toast({ html: 'Ocorreu um erro ao salvar o cliente!' });
+        });
+    }
+</script>

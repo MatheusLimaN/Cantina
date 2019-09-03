@@ -1,0 +1,158 @@
+.sidenav{
+  background-color: #415674;
+}
+
+.user-view{
+  background-color: #40404175;
+  text-align: center;
+  padding: 32px;
+}
+
+.name{
+  margin-top: 0px;
+}
+
+a.sidenav-trigger.top-nav {
+  position: absolute;
+  text-align: center;
+  height: 48px;
+  width: 48px;
+  top: 28px;
+  float: none;
+  margin-left: 1.5rem;
+  color: #415674;
+  font-size: 36px;
+  z-index: 2;
+}
+
+nav.top-nav {
+  background-color: #eaeaea !important;
+  height: 90px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-bottom: 1px solid rgba(0,0,0,0.14);
+  background-color: transparent;
+}
+
+nav.top-nav h1.header {
+  margin: 0;
+  padding-top: 22px;
+}
+.header {
+  color: #415674;
+  font-weight: 300;
+}
+
+.container {
+margin: 0 auto;
+max-width: 1280px;
+width: 90%
+}
+
+@media only screen and (min-width: 601px) {
+.container {
+  width: 85%
+}
+}
+
+@media only screen and (min-width: 993px) {
+.container {
+  width: 70%
+}
+}
+
+a.sidenav-trigger.top-nav i {
+font-size: 32px
+}
+
+@media only screen and (max-width: 600px) {
+a.sidenav-trigger.top-nav {
+  left: 0
+}
+ul.sidenav.sidenav-fixed {
+  border: 0
+}
+}
+
+@media only screen and (max-width: 992px) {
+nav .nav-wrapper {
+  text-align: center
+}
+nav .nav-wrapper a.page-title {
+  font-size: 36px
+}
+}
+
+
+figcaption,
+figure,
+main {
+display: block
+}
+
+header,
+main,
+footer,
+.top-nav {
+padding-left: 300px
+}
+
+@media only screen and (max-width: 992px) {
+header,
+main,
+  footer,
+  .top-nav {
+  padding-left: 0
+}
+}
+
+.color-blue{
+background-color: #415674 !important;
+}
+
+.text-blue{
+  color: #415674;
+}
+
+input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid #415674;
+  -webkit-box-shadow: 0 1px 0 0 #415674;
+  box-shadow: 0 1px 0 0 #415674;
+}
+
+.input-field .prefix.active {
+  color: #415674;
+}
+
+input:not([type]):focus:not([readonly])+label, input[type=text]:not(.browser-default):focus:not([readonly])+label, input[type=password]:not(.browser-default):focus:not([readonly])+label, input[type=email]:not(.browser-default):focus:not([readonly])+label, input[type=url]:not(.browser-default):focus:not([readonly])+label, input[type=time]:not(.browser-default):focus:not([readonly])+label, input[type=date]:not(.browser-default):focus:not([readonly])+label, input[type=datetime]:not(.browser-default):focus:not([readonly])+label, input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label, input[type=tel]:not(.browser-default):focus:not([readonly])+label, input[type=number]:not(.browser-default):focus:not([readonly])+label, input[type=search]:not(.browser-default):focus:not([readonly])+label, textarea.materialize-textarea:focus:not([readonly])+label {
+  color: #415674;
+}
+
+.dropdown-content li>a, .dropdown-content li>span {
+  color: #415674;
+}
+
+.select-wrapper input.select-dropdown:focus {
+  border-bottom: 1px solid #415674;
+}
+
+.pagination li.active {
+  background-color: #415674;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  border: 1px solid #415674;
+  background-color: #585858;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #585858), color-stop(100%, #415674));
+  background: -webkit-linear-gradient(top, #585858 0%, #415674 100%);
+  background: -moz-linear-gradient(top, #585858 0%, #415674 100%);
+  background: -ms-linear-gradient(top, #585858 0%, #415674 100%);
+  background: -o-linear-gradient(top, #585858 0%, #415674 100%);
+  background: linear-gradient(to bottom, #585858 0%, #415674 100%);
+}
+
+.resumeDetails{
+  background-color: #efefef;
+  padding: 14px !important;
+  border: 10px solid #fafafa;
+}

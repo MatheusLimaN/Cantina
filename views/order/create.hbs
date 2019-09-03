@@ -1,0 +1,200 @@
+<div class="row">
+    <div class="col s12">
+        <div class="input-field col s12 m5 l6">
+            <select id="produto">
+                {{#each products}}
+                <option value="{{Codigo}}">{{Nome}} - R$ {{Valor}}</option>
+                {{/each}}
+            </select>
+            <label>Produto</label>
+        </div>
+        <div class="input-field col s12 m3 l4">
+            <input id="quantidade" type="number" class="validate" min="0" max="100" value="1">
+            <label for="quantidade">Quantidade</label>
+        </div>
+        <div class="input-field col s12 m4 l2">
+            <a class="waves-effect waves-light btn color-blue" onclick="addProduct()" style="width: 100%"><i
+                    class="material-icons right">add</i>Adicionar</a>
+        </div>
+        <div class="col s12" style="min-height: 65vh;max-height: 65vh;overflow: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th class="center">Valor</th>
+                        <th class="center">Quantidade</th>
+                        <th class="center">Ação</th>
+                    </tr>
+                </thead>
+
+                <tbody id="shoppingCart">
+                </tbody>
+            </table>
+        </div>
+        <div class="col s12 m6" style="font-size: 18px;line-height:36px;">
+            <b>Total: </b> R$<span id="total">0.00</span>
+        </div>
+        <div class="col s12 m4 offset-m2">
+            <a class="waves-effect waves-light btn color-blue modal-trigger" href="#modalEndShopping"
+                style="width: 100%"><i class="material-icons right">check</i>Finalizar compra</a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modalEndShopping" class="modal">
+    <div class="modal-content" style="padding-bottom: 0px">
+        <h5 class="center">Finalizar Compra</h5>
+        <div class="row" style="margin-bottom: 0px">
+            <div class="input-field col s12">
+                <select id="cliente">
+                    {{#each clients}}
+                    <option value="{{_id}}">{{Nome}} {{Sobrenome}}</option>
+                    {{/each}}
+                </select>
+                <label>Cliente</label>
+            </div>
+            <div class="input-field col s6">
+                <select id="forma_pagamento">
+                    <option value="Dinheiro">Dinheiro</option>
+                    <option value="Cartão de crédito">Cartão de crédito</option>
+                    <option value="Cartão de débito">Cartão de débito</option>
+                </select>
+                <label>Forma de pagamento</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="valor_pago" type="number" class="validate" onkeyup="calcValor()">
+                <label for="valor_pago">Valor pago</label>
+            </div>
+            <h5 class="center">Resumo</h5>
+            <div class="row" style="font-size: 16px; margin-bottom:0px">
+                <div class="col s12 m4 center resumeDetails">
+                    <b>Valor Total</b><br>R$<span id="valorTotal">0.00</span>
+                </div>
+                <div class="col s12 m4 center resumeDetails">
+                    <b>Valor Pago</b><br>R$<span id="valorPago">0.00</span>
+                </div>
+                <div class="col s12 m4 center resumeDetails">
+                    <b>Valor Restante</b><br>R$<span id="valorRestante">0.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer" style="text-align: center">
+        <a class="waves-effect waves-light color-blue white-text btn" style="width: 100%"
+            onclick="closeShop()">Finalizar</a>
+    </div>
+</div>
+
+<script>
+    var products = [];
+    var shoppingCart = [];
+
+    $.get("/products/getAllProducts", function (data) {
+        products = data;
+    });
+
+    function addProduct() {
+        var quantidade = parseInt($("#quantidade").val());
+        var codigo = $("#produto").val();
+
+        $("#quantidade").val(1);
+
+        var product = products.find(item => item.Codigo == codigo);
+        var indexShoppingCart = shoppingCart.findIndex(item => item.Codigo == codigo);
+
+        //Ja está adicionado
+        if (indexShoppingCart != -1) {
+            shoppingCart[indexShoppingCart].Quantidade += quantidade;
+        } else {
+            shoppingCart.push({
+                Codigo: product.Codigo,
+                Nome: product.Nome,
+                Quantidade: quantidade,
+                Valor: product.Valor,
+                _Id: product._id
+            });
+        }
+
+        listShoppingCart();
+    }
+
+    function deleteProduct(Codigo) {
+        var indexShoppingCart = shoppingCart.findIndex(item => item.Codigo == Codigo);
+        shoppingCart.splice(indexShoppingCart, 1);
+        listShoppingCart();
+    }
+
+    function listShoppingCart() {
+        var html = "";
+        var total = 0;
+
+        for (var i = 0; i < shoppingCart.length; i++) {
+            total += shoppingCart[i].Valor * shoppingCart[i].Quantidade;
+            html += `
+                <tr>
+                    <td>${shoppingCart[i].Nome}</td>
+                    <td class="center">R$ ${shoppingCart[i].Valor}</td>
+                    <td class="center">${shoppingCart[i].Quantidade}</td>
+                    <td class="center">
+                        <a class="btn-flat text-blue tooltipped" data-position="bottom" data-tooltip="Remover"
+                            onClick="deleteProduct('${shoppingCart[i].Codigo}')">
+                            <i class="large material-icons">delete</i>
+                        </a>
+                    </td>
+                </tr>`
+        }
+
+        $("#shoppingCart").html(html);
+        $("#total").html(total.toFixed(2));
+        $("#valorTotal").html(total.toFixed(2));
+        $("#valorRestante").html(total.toFixed(2));
+    }
+
+    function calcValor() {
+        var valorPago = parseFloat($("#valor_pago").val());
+        var valorTotal = parseFloat($("#valorTotal").html());
+        var valorRestante = (valorTotal - valorPago);
+
+        if (isNaN(valorPago)) {
+            $("#valorPago").html(0.00);
+            $("#valorRestante").html(valorTotal.toFixed(2));
+        } else {
+            $("#valorPago").html(valorPago.toFixed(2));
+            $("#valorRestante").html(valorRestante.toFixed(2));
+        }
+    }
+
+    function closeShop() {
+        var Cliente = $("#cliente").val();
+        var Valor_pago = parseFloat($("#valor_pago").val() || 0);
+        var Valor_total = parseFloat($("#valorTotal").html());
+        var Forma_pagamento = $("#forma_pagamento").val();
+
+
+        var body = {
+            Cliente: Cliente,
+            Forma_pagamento: Forma_pagamento,
+            Valor_pago: Valor_pago,
+            Valor_total: Valor_total,
+            Produtos: shoppingCart
+        };
+
+        $.ajax({
+            "url": "/orders/saveOrder",
+            "method": "POST",
+            "headers": {
+                "content-type": "application/json",
+                "cache-control": "no-cache",
+                "postman-token": "a5d58fdc-e6cb-6c9b-cf2a-3fab58033457"
+            },
+            "processData": false,
+            "data": JSON.stringify(body)
+        }).done(function (response) {
+            localStorage.setItem("message", "Venda salva com sucesso!");
+            window.location = "/orders/create";
+        }).fail(function () {
+            M.toast({ html: 'Ocorreu um erro ao salvar a venda!' });
+        });
+    }
+</script>

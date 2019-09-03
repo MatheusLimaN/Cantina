@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col s12">
+        <input id="id" value="{{product._id}}" hidden />
+        <div class="input-field col s12 m6">
+            <input id="codigo" type="text" class="validate" value="{{product.Codigo}}">
+            <label for="codigo">Código</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input id="nome" type="text" class="validate" value="{{product.Nome}}">
+            <label for="nome">Nome</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input id="valor" type="text" class="validate" value="{{product.Valor}}">
+            <label for="valor">Valor</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input id="quantidade" type="text" class="validate" value="{{product.Quantidade}}">
+            <label for="quantidade">Quantidade</label>
+        </div>
+        <div class="col s12 m4 offset-m8">
+            <a style="width: 100%" class="waves-effect waves-light btn color-blue" onclick="saveProduct()"><i
+                    class="material-icons right">send</i>Salvar</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#codigo').mask('#0');
+        $('#valor').mask("Z0999999,00", {
+            translation: {
+                '0': { pattern: /\d/ },
+                '9': { pattern: /\d/, optional: true },
+                'Z': { pattern: /[\-\+]/, optional: true }
+            }
+        });
+        $('#quantidade').mask("Z0999999", {
+            translation: {
+                '0': { pattern: /\d/ },
+                '9': { pattern: /\d/, optional: true },
+                'Z': { pattern: /[\-\+]/, optional: true }
+            }
+        });
+    });
+
+    function saveProduct() {
+        var Codigo = $("#codigo").val();
+        var Nome = $("#nome").val();
+        var Quantidade = $("#quantidade").val();
+        var Valor = $("#valor").val().replace(/\./g, '').replace(/\,/g, '.');
+        var Id = $("#id").val();
+
+        $.post("/products/saveProduct", { Codigo, Nome, Quantidade, Valor, Id }, function (data) {
+            localStorage.setItem("message", "Produto salvo com sucesso!");
+            window.location = "/products";
+        }).fail(function () {
+            M.toast({ html: 'Ocorreu um erro ao salvar o produto!' });
+        });
+    }
+</script>

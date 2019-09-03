@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col s12">
+        <div class="input-field col s12 m4">
+            <select id="cliente">
+                {{#each clients}}
+                <option value="{{_id}}">{{Nome}} {{Sobrenome}}</option>
+                {{/each}}
+            </select>
+            <label>Cliente</label>
+        </div>
+        <div class="input-field col s12 m4">
+            <select id="forma_pagamento">
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Cartão de crédito">Cartão de crédito</option>
+                <option value="Cartão de débito">Cartão de débito</option>
+            </select>
+            <label>Forma de pagamento</label>
+        </div>
+        <div class="input-field col s12 m4">
+            <input id="valor" type="text" class="validate">
+            <label for="valor">Valor</label>
+        </div>
+        <div class="col s12 m4 offset-m8">
+            <a style="width: 100%" class="waves-effect waves-light btn color-blue" onclick="savePayment()"><i
+                    class="material-icons right">send</i>Salvar</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#valor').mask("Z0999999,00", {
+            translation: {
+                '0': { pattern: /\d/ },
+                '9': { pattern: /\d/, optional: true },
+                'Z': { pattern: /[\-\+]/, optional: true }
+            }
+        });
+    });
+
+    function savePayment() {
+        var Cliente = $("#cliente").val();
+        var Forma_pagamento = $("#forma_pagamento").val();
+        var Valor = $("#valor").val().replace(/\./g, '').replace(/\,/g, '.');
+
+
+        $.post("/payments/savePayment", { Cliente, Forma_pagamento, Valor }, function (data) {
+            localStorage.setItem("message", "Pagamento salvo com sucesso!");
+            window.location = "/payments";
+        }).fail(function () {
+            M.toast({ html: 'Ocorreu um erro ao salvar o pagamento!' });
+        });
+    }
+</script>

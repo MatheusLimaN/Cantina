@@ -1,0 +1,38 @@
+<div class="row">
+    {{#each historic}}
+    {{#if isOrder}}
+    <div class="col s12 l6 offset-l3">
+        <div class="card grey lighten-1">
+            <div class="card-content ">
+                <span class="card-title center">Compra</span>
+                <b>Data:</b> {{formatDate date=createdAt format="DD/MM/YYYY HH:mm:SS"}} <br>
+                <b>Forma de Pagamento:</b> {{Forma_pagamento}} <br>
+                <b>Valor Total:</b> R${{Valor_total}} <br>
+                <b>Valor Pago:</b> R${{Valor_pago}} <br>
+                <b>Valor Pendente:</b> R${{calcValor valorTotal=Valor_total valorPago=Valor_pago}} <br>
+                <b>Produtos:</b>
+                <ul>
+                    {{#each Produtos}}
+                    <li>{{Nome}} - {{Quantidade}} x R$ {{Valor}}</li>
+                    {{/each}}
+                </ul> <br>
+
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    {{#if isPayment}}
+    <div class="col s12 l6 offset-l3">
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+                <span class="card-title center">Pagamento</span>
+                <b>Data:</b> {{formatDate date=createdAt format="DD/MM/YYYY HH:mm:SS"}} <br>
+                <b>Forma de Pagamento:</b> {{Forma_pagamento}} <br>
+                <b>Valor:</b> R${{Valor}} <br>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    {{/each}}
+
+</div>
