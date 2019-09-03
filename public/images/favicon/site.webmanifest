@@ -11,9 +11,16 @@
             "src": "/images/favicon/android-chrome-384x384.png",
             "sizes": "384x384",
             "type": "image/png"
+        },
+        {
+            "src": "/images/favicon/android-chrome-384x384.png",
+            "sizes": "512x512",
+            "type": "image/png"
         }
     ],
     "theme_color": "#404c5d",
     "background_color": "#404c5d",
-    "display": "standalone"
+    "display": "standalone",
+    "start_url": "/",
+    "scope": "/"
 }
