@@ -2,8 +2,8 @@ var Service = require('node-windows').Service;
 
 // Create a new service object
 var svc = new Service({
-    name: 'Nome da sua Aplicação',
-    description: 'Apenas uma descrição',
+    name: 'Cantina',
+    description: 'Sistema Cantina',
     script: 'C:\\Cantina\\bin\\www'
 });
 
