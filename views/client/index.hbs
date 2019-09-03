@@ -12,8 +12,8 @@
         <table id="table" class="highlight cell-border stripe display responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>CPF</th>
                     <th>Nome</th>
+                    <th>CPF</th>
                     <th>Celular</th>
                     <th>E-mail</th>
                     <th>Saldo</th>
@@ -23,12 +23,16 @@
             <tbody>
                 {{#each clients}}
                 <tr>
-                    <td>{{CPF}}</td>
                     <td>{{Nome}} {{Sobrenome}}</td>
+                    <td>{{CPF}}</td>
                     <td>{{Celular}}</td>
                     <td>{{Email}}</td>
                     <td>R$ {{toFixed value=Saldo fixed=2}}</td>
                     <td>
+                        <a class="btn-flat text-blue tooltipped" data-position="bottom" data-tooltip="Novo pagamento"
+                            href="/payments/create/{{_id}}">
+                            <i class="large material-icons">attach_money</i>
+                        </a>
                         <a class="btn-flat text-blue tooltipped" data-position="bottom" data-tooltip="Editar"
                             href="/clients/create/{{_id}}">
                             <i class="large material-icons">edit</i>

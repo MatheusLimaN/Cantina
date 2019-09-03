@@ -11,8 +11,14 @@ router.get('/', async (req, res, next) => {
 
 router.get('/create', async (req, res, next) => {
   const clients = await clientController.getAllClients();
-  res.render('payment/create', { title: "Cadastrar novo pagamento", showReturn: true, clients });
+  res.render('payment/create', { title: "Cadastrar novo pagamento", showReturn: true, clients, clientId: "" });
 });
+
+router.get('/create/:Id', async (req, res, next) => {
+  const clients = await clientController.getAllClients();
+  res.render('payment/create', { title: "Cadastrar novo pagamento", showReturn: true, clients, clientId: req.params.Id });
+});
+
 
 router.post('/savePayment', paymentController.savePayment);
 

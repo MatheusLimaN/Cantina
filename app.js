@@ -9,16 +9,14 @@ import exphbs from 'express-handlebars';
 import moment from 'moment';
 
 const app = express();
-
 var hbs = exphbs.create({
   extname: ".hbs",
   // Specify helpers which are only registered on this instance.
   helpers: {
-    foo: function () { return 'FOO!'; },
-    bar: function () { return 'BAR!'; },
     toFixed: (options) => options.hash.value.toFixed(options.hash.fixed),
     formatDate: (options) => moment(options.hash.date).format(options.hash.format),
-    calcValor: (options) => (options.hash.valorTotal - options.hash.valorPago).toFixed(2)
+    calcValor: (options) => (options.hash.valorTotal - options.hash.valorPago).toFixed(2),
+    mult: (options) => (options.hash.a * options.hash.b).toFixed(2),
   }
 });
 

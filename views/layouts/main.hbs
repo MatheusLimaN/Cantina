@@ -47,21 +47,22 @@
       <li><a href="/products" class="white-text"><i class="material-icons white-text">all_inbox</i>Produtos</a></li>
       <li><a href="/payments" class="white-text"><i class="material-icons white-text">attach_money</i>Pagamentos</a>
       </li>
-      <li><a href="/orders" class="white-text"><i class="material-icons white-text">shopping_cart</i>Venda</a></li>
+      <li><a href="/orders" class="white-text"><i class="material-icons white-text">history</i>Vendas</a></li>
+      <li><a href="/orders/create" class="white-text"><i class="material-icons white-text">shopping_cart</i>Caixa</a>
+      </li>
       <li><a href="/orders" class="white-text"><i class="material-icons white-text">exit_to_app</i>Sair</a></li>
     </ul>
   </header>
   <main>
     <div class="section grey lighten-2 text-blue">
       <div class="container">
-        <div class="row" style="margin-bottom: 0;">
-          <div class="col s12 m6 offset-m1 xl10 center-on-small-only">
-            <h4 class="light">{{title}}</h4>
+        <div class="row" style="margin-bottom: 0; position: relative">
+          <div class="col s12 center-on-large-only">
+            <h5 class="light" style="margin: 0px !important; line-height:36px; ">{{title}}</h5>
           </div>
           {{#if showReturn}}
-          <div class="col x1" style="margin: 1.52rem 0 .912rem 0;float: right;">
-            <a style="width: 100%" class="btn-flat text-blue" onclick="goBack()"><i
-                class="material-icons left">arrow_back</i>Voltar</a>
+          <div style="position: absolute; right: 0">
+            <a class="btn-flat text-blue" onclick="goBack()"><i class="material-icons left">arrow_back</i>Voltar</a>
           </div>
           {{/if}}
         </div>
@@ -69,7 +70,7 @@
     </div>
     <div class="container">
       <div class="row">
-        <div class="col s12" style="margin-top: 40px;">
+        <div class="col s12" style="margin-top: 20px; padding: 0px">
           {{{body}}}
         </div>
       </div>

@@ -1,38 +1,115 @@
 <div class="row">
-    {{#each historic}}
-    {{#if isOrder}}
-    <div class="col s12 l6 offset-l3">
-        <div class="card grey lighten-1">
-            <div class="card-content ">
-                <span class="card-title center">Compra</span>
-                <b>Data:</b> {{formatDate date=createdAt format="DD/MM/YYYY HH:mm:SS"}} <br>
-                <b>Forma de Pagamento:</b> {{Forma_pagamento}} <br>
-                <b>Valor Total:</b> R${{Valor_total}} <br>
-                <b>Valor Pago:</b> R${{Valor_pago}} <br>
-                <b>Valor Pendente:</b> R${{calcValor valorTotal=Valor_total valorPago=Valor_pago}} <br>
-                <b>Produtos:</b>
-                <ul>
-                    {{#each Produtos}}
-                    <li>{{Nome}} - {{Quantidade}} x R$ {{Valor}}</li>
-                    {{/each}}
-                </ul> <br>
-
+    <div class="col s12 l4">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Cliente</span>
+                <div class="input-field">
+                    <p>{{client.Nome}} {{client.Sobrenome}}</p>
+                    <label class="active">Nome</label>
+                </div>
+                <div class="input-field">
+                    <p>{{client.CPF}}</p>
+                    <label class="active">CPF</label>
+                </div>
+                <div class="input-field">
+                    <p>{{client.Celular}}</p>
+                    <label class="active">Celular</label>
+                </div>
+                <div class="input-field">
+                    <p>{{client.Email}}</p>
+                    <label class="active">E-mail</label>
+                </div>
+                <div class="input-field">
+                    <p>R$ {{toFixed value=client.Saldo fixed=2}}</p>
+                    <label class="active">Saldo</label>
+                </div>
+            </div>
+            <div class="card-action" style="text-align: center; padding: 9px;">
+                <a class="btn-flat text-blue tooltipped" data-position="bottom" data-tooltip="Novo pagamento"
+                    href="/payments/create/{{client._id}}">
+                    <i class="large material-icons">attach_money</i>
+                </a>
+                <a class="btn-flat text-blue tooltipped" data-position="bottom" data-tooltip="Editar"
+                    href="/clients/create/{{client._id}}">
+                    <i class="large material-icons">edit</i>
+                </a>
             </div>
         </div>
     </div>
-    {{/if}}
-    {{#if isPayment}}
-    <div class="col s12 l6 offset-l3">
-        <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-                <span class="card-title center">Pagamento</span>
-                <b>Data:</b> {{formatDate date=createdAt format="DD/MM/YYYY HH:mm:SS"}} <br>
-                <b>Forma de Pagamento:</b> {{Forma_pagamento}} <br>
-                <b>Valor:</b> R${{Valor}} <br>
+    <div class="col s12 l8">
+        <div class="row">
+            {{#each historic}}
+            {{#if isOrder}}
+            <div class="col s12">
+                <div class="card">
+                    <div class="card-content row">
+                        <span class="card-title center">Compra</span>
+                        <div class="input-field col s4">
+                            <p>{{formatDate date=createdAt format="DD/MM/YYYY HH:mm:SS"}}</p>
+                            <label class="active">Data</label>
+                        </div>
+                        <div class="input-field col s8">
+                            <p>{{Forma_pagamento}}</p>
+                            <label class="active">Forma de Pagamento</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <p>R$ {{toFixed value=Valor_total fixed=2}}</p>
+                            <label class="active">Valor Total</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <p>R$ {{toFixed value=Valor_pago fixed=2}}</p>
+                            <label class="active">Valor Pago</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <p>R$ {{calcValor valorTotal=Valor_total valorPago=Valor_pago}}</p>
+                            <label class="active">Valor Pendente</label>
+                        </div>
+                        <div class="col s12">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Detalhe</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each Produtos}}
+                                    <tr>
+                                        <td>{{Nome}}</td>
+                                        <td>{{Quantidade}} x R$ {{toFixed value=Valor fixed=2}}</td>
+                                        <td>R${{mult a=Quantidade b=Valor }}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
+            {{/if}}
+            {{#if isPayment}}
+            <div class="col s12">
+                <div class="card color-blue">
+                    <div class="card-content white-text row">
+                        <span class="card-title center">Pagamento</span>
+                        <div class="input-field col s4">
+                            <p>{{formatDate date=createdAt format="DD/MM/YYYY HH:mm:SS"}}</p>
+                            <label class="active">Data</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <p>{{Forma_pagamento}}</p>
+                            <label class="active">Forma de Pagamento</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <p>R$ {{toFixed value=Valor fixed=2}}</p>
+                            <label class="active">Valor</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+            {{/each}}
         </div>
     </div>
-    {{/if}}
-    {{/each}}
-
 </div>

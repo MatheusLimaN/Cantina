@@ -34,7 +34,7 @@ router.get('/details/:Id', async (req, res, next) => {
     }
   });
 
-  res.render('client/details', { title: `${client.Nome} ${client.Sobrenome}`, showReturn: true, historic });
+  res.render('client/details', { title: "Detalhes do cliente", client, showReturn: true, historic });
 });
 
 router.get('/create/:Id', async (req, res, next) => {
