@@ -29,6 +29,10 @@
                     <td>{{Email}}</td>
                     <td>R$ {{toFixed value=Saldo fixed=2}}</td>
                     <td>
+                        <a class="btn-flat text-blue tooltipped" data-position="bottom" data-tooltip="Nova venda"
+                            href="/orders/create/{{_id}}">
+                            <i class="large material-icons">shopping_cart</i>
+                        </a>
                         <a class="btn-flat text-blue tooltipped" data-position="bottom" data-tooltip="Novo pagamento"
                             href="/payments/create/{{_id}}">
                             <i class="large material-icons">attach_money</i>

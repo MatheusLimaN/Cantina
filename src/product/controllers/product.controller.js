@@ -34,7 +34,7 @@ const createProduct = (req, res) => {
 
 const getAllProducts = () =>
     Product.find()
-        .sort({ createdAt: 1 })
+        .sort({ Nome: 1 })
         .then(result => result)
         .catch(error => []);
 

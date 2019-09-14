@@ -4,6 +4,7 @@ body {
 
 .sidenav {
   background-color: #415674;
+  width: 240px;
 }
 
 .user-view {
@@ -95,7 +96,7 @@ header,
 main,
 footer,
 .top-nav {
-  padding-left: 300px;
+  padding-left: 240px;
 }
 
 @media only screen and (max-width: 992px) {
