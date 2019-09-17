@@ -13,7 +13,7 @@ const updateClient = (req, res) => {
         Sobrenome: req.body.Sobrenome,
         Celular: req.body.Celular,
         Email: req.body.Email,
-        Saldo: req.body.Saldo,
+        Saldo: req.body.Saldo || 0,
     };
 
     return Client.update({ "_id": req.body.Id }, client, { upsert: true, setDefaultsOnInsert: true })
