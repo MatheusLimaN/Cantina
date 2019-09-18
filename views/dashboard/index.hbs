@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="col s6 l3">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center">Vendas</span>
+                <h5 class="center">{{data.quantidade}}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col s6 l3">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center">Valor vendido</span>
+                <h5 class="center">R$ {{toFixed value=data.valorTotal fixed=2}}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col s6 l3">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center">Valor recebido</span>
+                <h5 class="center">R$ {{toFixed value=data.valorPago fixed=2}}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col s6 l3">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center">Valor pendente</span>
+                <h5 class="center">R$ {{toFixed value=data.valorDevido fixed=2}}
+                    {{#if data.valorDevidoDown}}
+                    <i class="material-icons red-text">arrow_downward</i>
+                    {{/if}}
+                    {{#if data.valorDevidoUp}}
+                    <i class="material-icons green-text">arrow_upward</i>
+                    {{/if}}
+
+                </h5>
+            </div>
+        </div>
+    </div>
+    <div class="col s6 l8">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center">Vendas</span>
+                <canvas id="canvasVendas" width="1425" height="712"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var data = {{{ data.values }}}
+
+    var labels = data.map(item => item.data.dia + '/' + item.data.mes + '/' + item.data.ano);
+    var values_valorTotal = data.map(item => item.valorTotal);
+    var values_valorPago = data.map(item => item.valorPago);
+    var values_valorDevido = data.map(item => item.valorDevido);
+
+    var lineChartData = {
+        labels: labels,
+        datasets: [{
+            label: 'Valor',
+            borderColor: "#4caf50",
+            backgroundColor: "#4caf50",
+            fill: false,
+            data: values_valorTotal,
+        }]
+    };
+
+    window.onload = function () {
+        var canvasVendas = document.getElementById('canvasVendas').getContext('2d');
+        window.myLine = Chart.Line(canvasVendas, {
+            data: lineChartData,
+            options: {
+                stacked: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function (value, index, values) {
+                                return value.toLocaleString("pt-br", { style: "currency", currency: "BRL" });
+                            }
+                        }
+                    }]
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, chart) {
+                            return "Valor: " + tooltipItem.yLabel.toLocaleString("pt-br", { style: "currency", currency: "BRL" });
+                        }
+                    }
+                }
+            }
+        });
+    };
+
+</script>
+
+<script src="/scripts/Chart.min.js"></script>

@@ -48,9 +48,59 @@ const getAllOrders = () =>
         .then(result => result)
         .catch(error => []);
 
+const getTotalValueOrdersByMonth = ({ init, end }) => Order.aggregate([
+    {
+        '$match': {
+            'createdAt': {
+                '$gte': new Date(init),
+                '$lte': new Date(end)
+            }
+        }
+    },
+    {
+        '$group': {
+            '_id': {
+                'data': {
+                    'ano': {
+                        '$year': '$createdAt'
+                    },
+                    'mes': {
+                        '$month': '$createdAt'
+                    },
+                    'dia': {
+                        '$dayOfMonth': '$createdAt'
+                    }
+                }
+            },
+            'valorTotal': {
+                '$sum': '$Valor_total'
+            },
+            'valorPago': {
+                '$sum': '$Valor_pago'
+            },
+            'quantidade': {
+                '$sum': 1
+            }
+        }
+    }, {
+        '$project': {
+            '_id': 0,
+            'data': '$_id.data',
+            'valorTotal': 1,
+            'valorPago': 1,
+            'valorDevido': {
+                '$subtract': [
+                    '$valorTotal', '$valorPago'
+                ]
+            },
+            'quantidade': 1
+        }
+    }
+]);
 
 export default {
     saveOrder,
     getAllOrders,
-    getOrdersByClient
+    getOrdersByClient,
+    getTotalValueOrdersByMonth
 };
