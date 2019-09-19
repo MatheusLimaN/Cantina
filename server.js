@@ -65,7 +65,7 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '8081');
 app.set('port', port);
 
 // conectar ao mongo db

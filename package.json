@@ -6,7 +6,7 @@
     "start": "nodemon --exec babel-node server.js",
     "build": "babel src --out-dir dist/src && babel routes --out-dir dist/routes && babel server.js --out-dir dist",
     "clean": "rm -rf dist/",
-    "copy": "cp package.json dist/ && cp -R views/ dist/views/ && cp -R public/ dist/public/",
+    "copy": "cp .env.example dist/ && cp package.json dist/ && cp -R views/ dist/views/ && cp -R public/ dist/public/",
     "build:prod": "npm run clean && npm run build && npm run copy"
   },
   "dependencies": {
