@@ -15,4 +15,3 @@ artifacts:
     - dist*/**
     - dist/public/**/*
     - views/**/*
-  discard-paths: yes
