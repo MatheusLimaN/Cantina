@@ -12,9 +12,4 @@ phases:
       - npm run build:prod
 artifacts:
   files:
-    - dist/**
-    - dist/public/**/*
-    - dist/views/**/*
-    - dist/src/**/*
-    - dist/routes/**/*
-  base-directory: dist/
+    - dist/**/*
