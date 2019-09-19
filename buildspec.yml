@@ -17,4 +17,4 @@ artifacts:
     - dist/views/**/*
     - dist/src/**/*
     - dist/routes/**/*
-  base-directory: dist
+  base-directory: dist/
