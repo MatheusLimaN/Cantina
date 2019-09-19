@@ -13,3 +13,7 @@ phases:
 artifacts:
   files:
     - dist/**
+    - dist/public/**/*
+    - dist/views/**/*
+    - dist/src/**/*
+    - dist/routes/**/*
