@@ -56,8 +56,7 @@ const getTotalValueOrdersByMonth = ({ init, end }) => Order.aggregate([
                 '$lte': new Date(end)
             }
         }
-    },
-    {
+    }, {
         '$group': {
             '_id': {
                 'data': {
@@ -90,10 +89,14 @@ const getTotalValueOrdersByMonth = ({ init, end }) => Order.aggregate([
             'valorPago': 1,
             'valorDevido': {
                 '$subtract': [
-                    '$valorTotal', '$valorPago'
+                    '$valorPago', '$valorTotal'
                 ]
             },
             'quantidade': 1
+        }
+    }, {
+        '$sort': {
+            "data": 1
         }
     }
 ]);
