@@ -12,7 +12,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.use('/login', login);
-router.use('/', IsAuthenticated, order);
+router.use('/', IsAuthenticated, dashboard);
 router.use('/user', IsAuthenticated, user);
 router.use('/clients', IsAuthenticated, client);
 router.use('/orders', IsAuthenticated, order);
